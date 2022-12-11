@@ -7,7 +7,7 @@ namespace CSharpStarterPack.Days
 {
     public static class Day01
     {
-        public static string PuzzleA(string inputText)
+        public static string PuzzleA()
         {
             var lines = PuzzleInput.GetInputAsArray(1);
             var elvesWithCalories = new Dictionary<int, int>();
