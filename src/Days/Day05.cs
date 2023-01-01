@@ -61,12 +61,12 @@ namespace CSharpStarterPack.Days
             foreach (var item in linesForMovement)
             {
                 int position1 = item.IndexOf("move ") + "move ".Length;
-                int positionn2 = item.IndexOf(" from ");
+                int position2 = item.IndexOf(" from ");
                 int positionOfLastFrom = item.IndexOf(" from ") + " from ".Length;
                 int positionOfStartTo = item.IndexOf(" to ");
                 int positionOfEndTo = item.IndexOf(" to ") + " to ".Length;
 
-                string movementAmount = item.Substring(position1, positionn2 - position1);
+                string movementAmount = item.Substring(position1, position2 - position1);
                 string fromStack = item.Substring(positionOfLastFrom, positionOfStartTo - positionOfLastFrom);
                 string toStack = item.Substring(positionOfEndTo);
 
@@ -138,12 +138,12 @@ namespace CSharpStarterPack.Days
             foreach (var item in linesForMovement)
             {
                 int position1 = item.IndexOf("move ") + "move ".Length;
-                int positionn2 = item.IndexOf(" from ");
+                int position2 = item.IndexOf(" from ");
                 int positionOfLastFrom = item.IndexOf(" from ") + " from ".Length;
                 int positionOfStartTo = item.IndexOf(" to ");
                 int positionOfEndTo = item.IndexOf(" to ") + " to ".Length;
 
-                string movementAmount = item.Substring(position1, positionn2 - position1);
+                string movementAmount = item.Substring(position1, position2 - position1);
                 string fromStack = item.Substring(positionOfLastFrom, positionOfStartTo - positionOfLastFrom);
                 string toStack = item.Substring(positionOfEndTo);
 
