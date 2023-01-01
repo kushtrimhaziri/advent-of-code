@@ -25,8 +25,6 @@ namespace CSharpStarterPack.Days
             return finalScore;
         }
 
-
-
         public static int PuzzleB()
         {
             var predefinedResults = RockPaperScissorsConsts.FillPredefindedResults();
@@ -96,5 +94,4 @@ namespace CSharpStarterPack.Days
             X = 0, Y = 3 , Z = 6
         }
     }
-
 }
