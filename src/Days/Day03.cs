@@ -8,14 +8,15 @@ namespace CSharpStarterPack.Days
 {
     public static class Day03
     {
+        public static string[] Input = PuzzleInput.GetInputAsArray(3);
+
         public static int PuzzleA()
         {
             var alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
             int finalSum = 0;
-            var lines = PuzzleInput.GetInputAsArray(3);
 
-            foreach (var item in lines)
+            foreach (var item in Input)
             {
                 var charactersOnBothParts = new List<char>();
 
@@ -44,15 +45,14 @@ namespace CSharpStarterPack.Days
             var alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
             int finalSum = 0;
-            var lines = PuzzleInput.GetInputAsArray(3);
 
-            for (int i = 0; i < lines.Count(); i = i + 3)
+            for (int i = 0; i < Input.Count(); i = i + 3)
             {
                 var charactersOnBothParts = new List<char>();
 
-                foreach (char character in lines[i])
+                foreach (char character in Input[i])
                 {
-                    if (lines[i + 1].Contains(character) && lines[i + 2].Contains(character))
+                    if (Input[i + 1].Contains(character) && Input[i + 2].Contains(character))
                     {
                         if (!charactersOnBothParts.Contains(character))
                         {

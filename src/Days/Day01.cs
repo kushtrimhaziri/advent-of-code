@@ -7,15 +7,16 @@ namespace CSharpStarterPack.Days
 {
     public static class Day01
     {
+        public static string[] Input = PuzzleInput.GetInputAsArray(3);
+
         public static string PuzzleA()
         {
-            var lines = PuzzleInput.GetInputAsArray(1);
             var elvesWithCalories = new Dictionary<int, int>();
 
             var startElf = 1;
             var sumOfCalories = 0;
 
-            foreach (var calorie in lines)
+            foreach (var calorie in Input)
             {
                 if (string.IsNullOrEmpty(calorie))
                 {
@@ -31,13 +32,12 @@ namespace CSharpStarterPack.Days
         }
         public static int PuzzleB()
         {
-            var lines = PuzzleInput.GetInputAsArray(1);
             var elvesWithCalories = new Dictionary<int, int>();
 
             var startElf = 1;
             var sumOfCalories = 0;
 
-            foreach (var calorie in lines)
+            foreach (var calorie in Input)
             {
                 if (string.IsNullOrEmpty(calorie))
                 {

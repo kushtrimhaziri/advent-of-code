@@ -8,15 +8,15 @@ namespace CSharpStarterPack.Days
 {
     public static class Day02
     {
+        public static string[] Input = PuzzleInput.GetInputAsArray(3);
+
         public static int PuzzleA()
         {
             var predefinedResults = RockPaperScissorsConsts.FillPredefindedResults();
 
-            var lines = PuzzleInput.GetInputAsArray(2);
-
             var finalScore = 0;
 
-            foreach (var item in lines)
+            foreach (var item in Input)
             {
                 var splitLine = item.Split(' ');
 
@@ -29,11 +29,10 @@ namespace CSharpStarterPack.Days
         {
             var predefinedResults = RockPaperScissorsConsts.FillPredefindedResults();
 
-            var lines = PuzzleInput.GetInputAsArray(2);
 
             var finalScore = 0;
 
-            foreach (var item in lines)
+            foreach (var item in Input)
             {
                 var splitLine = item.Split(' ');
 
@@ -62,7 +61,7 @@ namespace CSharpStarterPack.Days
         public static char InputPaper = 'Y';
         public static char InputScissors = 'Z';
 
-        
+
         public static int Win = 6;
         public static int Draw = 3;
         public static int Lose = 0;
@@ -91,7 +90,7 @@ namespace CSharpStarterPack.Days
 
         public enum PointsB
         {
-            X = 0, Y = 3 , Z = 6
+            X = 0, Y = 3, Z = 6
         }
     }
 }
