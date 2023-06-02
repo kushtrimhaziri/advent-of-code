@@ -21,7 +21,10 @@
 //var Day6Part2_Solution = Day06.PuzzleB();
 
 //var Day10Part1_Solution = Day10.PuzzleA();
-Day10.PuzzleB();
+//Day10.PuzzleB();
+
+
+Console.WriteLine(Day08.PuzzleA());
 
 
 //Console.WriteLine(Day10Part1_Solution);
