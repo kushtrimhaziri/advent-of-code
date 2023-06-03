@@ -24,7 +24,7 @@
 //Day10.PuzzleB();
 
 
-Console.WriteLine(Day08.PuzzleA());
+Console.WriteLine(Day08.PuzzleB());
 
 
 //Console.WriteLine(Day10Part1_Solution);
