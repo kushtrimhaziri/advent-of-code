@@ -47,13 +47,11 @@ namespace CSharpStarterPack.Days_2023
             var min = seeds.Values.Select(x => x.Last()).Min();
             return min;
         }
-        public static int PuzzleB()
+        public static float PuzzleB()
         {
             string[] blocks = InputFull.Split(new[] { "\n\n" }, StringSplitOptions.None);
 
-            //var seeds = blocks[0].Split(':')[1].Trim().Split(' ').Select(x => float.Parse(x)).ToDictionary(x => x, x => new List<float> { x });
-
-            var BIGLIST = new List<RangeIncrementor>();
+            var initialList = new List<RangeIncrementor>();
 
 
             var seeds = blocks[0].Split(':')[1].Trim().Split(' ').Select(x => long.Parse(x)).ToList();
@@ -62,23 +60,24 @@ namespace CSharpStarterPack.Days_2023
 
             for (int i = 0; i < seeds.Count - 1; i += 2)
             {
-                BIGLIST.Add(new RangeIncrementor { Start = seeds[i], End = seeds[i] + seeds[i + 1] - 1, Incrementor = 0 });
+                initialList.Add(new RangeIncrementor { Start = seeds[i], End = seeds[i] + seeds[i + 1] - 1, Incrementor = 0 });
             }
 
-
-            var changableList = new List<RangeIncrementor>();
+            var rangeContainer = new List<List<RangeIncrementor>>() { initialList };
 
             for (int i = 1; i < blocks.Length; i++)
             {
                 var blockLines = blocks[i].Split("\n").ToArray();
 
-                foreach (var listOfRanges in BIGLIST)
+                var changableList = new List<RangeIncrementor>();
+                foreach (var listOfRanges in rangeContainer.Last())
                 {
                     var startPoint = listOfRanges.Start;
                     var endPoint = listOfRanges.End;
 
                     while (startPoint != endPoint)
                     {
+                        var found = false;
                         for (int j = 1; j < blockLines.Length; j++)
                         {
                             var destination_source_range = blockLines[j].Split(' ').Select(x => long.Parse(x)).ToList();
@@ -87,59 +86,64 @@ namespace CSharpStarterPack.Days_2023
 
                             if (startPoint >= rangeOfSeed.Min && startPoint <= rangeOfSeed.Max)
                             {
-                                if (rangeOfSeed.Max < listOfRanges.End && rangeOfSeed.Min > listOfRanges.Start)
+                                if (rangeOfSeed.Max < listOfRanges.End)
                                 {
-                                    changableList.Add(new RangeIncrementor { Start = rangeOfSeed.Min, End = rangeOfSeed.Max, Incrementor = destination_source_range[0] - destination_source_range[1] });
-                                    startPoint = rangeOfSeed.Max;
-                                }
-                                if (rangeOfSeed.Max < listOfRanges.End && rangeOfSeed.Min <= listOfRanges.Start)
-                                {
-                                    changableList.Add(new RangeIncrementor { Start = listOfRanges.Start, End = rangeOfSeed.Max, Incrementor = destination_source_range[0] - destination_source_range[1] });
-                                    startPoint = rangeOfSeed.Max;
-                                }
-                                if (rangeOfSeed.Max > listOfRanges.End && rangeOfSeed.Min <= listOfRanges.Start)
-                                {
-                                    changableList.Add(new RangeIncrementor { Start = listOfRanges.Start, End = listOfRanges.End, Incrementor = destination_source_range[0] - destination_source_range[1] });
-                                    startPoint = listOfRanges.End;
+                                    var incrementor = destination_source_range[0] - destination_source_range[1];
+                                    changableList.Add(new RangeIncrementor { Start = startPoint + incrementor, End = rangeOfSeed.Max + incrementor, Incrementor = incrementor });
+                                    startPoint = rangeOfSeed.Max + 1;
+                                    found = true;
+                                    break;
                                 }
                                 else
                                 {
-                                    changableList.Add(new RangeIncrementor { Start = startPoint, End = listOfRanges.End, Incrementor = destination_source_range[0] - destination_source_range[1] });
+                                    var incrementor = destination_source_range[0] - destination_source_range[1];
+
+                                    changableList.Add(new RangeIncrementor { Start = startPoint + incrementor, End = listOfRanges.End + incrementor, Incrementor = incrementor });
                                     startPoint = listOfRanges.End;
+                                    found = true;
 
+                                    break;
                                 }
-
                             }
                         }
-
-                    }
-
-                }
-
-
-
-
-                foreach (var dictionaryOfSeed in dictionaryOfSeeds)
-                {
-                    for (long t = dictionaryOfSeed.Key.Item1; t <= dictionaryOfSeed.Key.Item1 + dictionaryOfSeed.Key.Item2; t++)
-                    {
-                        for (int j = 1; j < blockLines.Length; j++)
+                        // need optimizations on this part.
+                        if (!found)
                         {
-                            var destination_source_range = blockLines[j].Split(' ').Select(x => long.Parse(x)).ToList();
+                            var startingPointTest = startPoint;
 
-                            var rangeOfSeed = FindRangeOfSeed(destination_source_range[1], destination_source_range[2]);
-
-                            if (t >= rangeOfSeed.Min && t <= rangeOfSeed.Max)
+                            while (!found)
                             {
+                                for (int j = 1; j < blockLines.Length; j++)
+                                {
+                                    var destination_source_range = blockLines[j].Split(' ').Select(x => long.Parse(x)).ToList();
 
+                                    var rangeOfSeed = FindRangeOfSeed(destination_source_range[1], destination_source_range[2]);
+
+                                    if (startingPointTest == destination_source_range[1])
+                                    {
+                                        startingPointTest--;
+                                        found = true;
+                                        break;
+                                    }
+                                    startingPointTest++;
+                                    if (startingPointTest == endPoint)
+                                    {
+                                        found = true;
+                                        break;
+                                    }
+                                }
                             }
-                        }
 
+                            changableList.Add(new RangeIncrementor { Start = startPoint, End = startingPointTest, Incrementor = 0 });
+                            startPoint = startingPointTest;
+                        }
                     }
                 }
+                rangeContainer.Add(changableList);
             }
 
-            return 0;
+            var minimum = rangeContainer.Last().OrderBy(x => x.Start).First().Start;
+            return minimum;
         }
 
 
